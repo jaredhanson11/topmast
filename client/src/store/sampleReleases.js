@@ -4,7 +4,7 @@ export default [
     namespace: 'endergy-tools',
     revision: '2',
     updated: '2020-02-16 00:50:10.253944 -0500 EST',
-    status: 'deployed',
+    status: 'pending',
     chart: 'helm-repo-0.1.0',
     app_version: 'latest'
   },
@@ -13,7 +13,7 @@ export default [
     namespace: 'common',
     revision: '1',
     updated: '2020-02-16 00:02:53.713009 -0500 EST',
-    status: 'deployed',
+    status: 'failed',
     chart: 'minio-5.0.7',
     app_version: 'master'
   },

@@ -30,6 +30,11 @@
         select-mode="single"
         @row-selected="clickRelease"
       >
+        <template v-slot:cell(status)="data">
+          <div v-bind:class="getStatusClass(data.item.status)">
+            {{ data.item.status }}
+          </div>
+        </template>
         <template v-slot:cell(updated)="data">
           {{ getTime(data.item.updated) }}
         </template>
@@ -60,7 +65,12 @@ export default {
   },
   computed: {
     releases() {
-      return this.$store.getters.getReleases
+      const releases = this.$store.getters.getReleases.map(item => {
+        var updatedItems = {}
+        updatedItems['updated'] = new Date(item.updated).getTime()
+        return { ...item, ...updatedItems }
+      })
+      return releases
     },
     filter() {
       return this.tableFilter.trim()
@@ -73,6 +83,11 @@ export default {
     },
     getTime(timestamp) {
       return new Date(timestamp).toLocaleString()
+    },
+    getStatusClass(status) {
+      if (status.toLowerCase() == 'pending') return 'text-warning'
+      else if (status.toLowerCase() == 'deployed') return 'text-success'
+      else if (status.toLowerCase() == 'failed') return 'text-danger'
     }
   }
 }
