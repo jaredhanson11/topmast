@@ -20,13 +20,20 @@
     </b-row>
     <b-row>
       <b-table
-        :filter="tableFilter"
+        :filter="filter"
         responsive
         striped
         hover
         :items="releases"
         :fields="tableFields"
-      ></b-table>
+        selectable
+        select-mode="single"
+        @row-selected="clickRelease"
+      >
+        <template v-slot:cell(updated)="data">
+          {{ getTime(data.item.updated) }}
+        </template>
+      </b-table>
     </b-row>
   </b-container>
 </template>
@@ -54,6 +61,18 @@ export default {
   computed: {
     releases() {
       return this.$store.getters.getReleases
+    },
+    filter() {
+      return this.tableFilter.trim()
+    }
+  },
+  methods: {
+    clickRelease(selectedItems) {
+      const { namespace, name } = selectedItems[0]
+      this.$router.push(`releases/${namespace}/${name}`)
+    },
+    getTime(timestamp) {
+      return new Date(timestamp).toLocaleString()
     }
   }
 }

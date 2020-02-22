@@ -10,7 +10,11 @@ export default new Vuex.Store({
   },
   mutations: {
     updateReleases(state, payload) {
-      state.releases = payload
+      const releases = payload.map(item => {
+        const time = new Date(item.updated).getTime()
+        return { ...item, updated: time }
+      })
+      state.releases = releases
     }
   },
   actions: {

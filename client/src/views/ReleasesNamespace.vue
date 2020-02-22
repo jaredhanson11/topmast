@@ -1,5 +1,5 @@
 <template>
-  <div id="releases">{{ params.namespace }}</div>
+  <div id="releases">{{ $route.params.namespace }}</div>
 </template>
 
 <script>
