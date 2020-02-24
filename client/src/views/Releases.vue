@@ -24,14 +24,20 @@
         responsive
         striped
         hover
-        :items="releases"
+        :items="releasesList"
         :fields="tableFields"
         selectable
         select-mode="single"
         @row-selected="clickRelease"
       >
         <template v-slot:cell(status)="data">
-          <div v-bind:class="getStatusClass(data.item.status)">
+          <div
+            v-bind:class="
+              getVariantForStatus(data.item.status)
+                ? `text-${getVariantForStatus(data.item.status)}`
+                : ''
+            "
+          >
             {{ data.item.status }}
           </div>
         </template>
@@ -44,11 +50,10 @@
 </template>
 
 <script>
-import sampleReleases from '@/store/sampleReleases.js'
-import store from '@/store'
-store.dispatch('updateReleases', sampleReleases)
+import releasesMixin from '@/mixins/releasesMixin'
 export default {
   name: 'Releases',
+  mixins: [releasesMixin],
   data() {
     return {
       tableFilter: '',
@@ -64,8 +69,8 @@ export default {
     }
   },
   computed: {
-    releases() {
-      const releases = this.$store.getters.getReleases.map(item => {
+    releasesList() {
+      const releases = this.$store.getters.getReleasesList.map(item => {
         var updatedItems = {}
         updatedItems['updated'] = new Date(item.updated).getTime()
         return { ...item, ...updatedItems }
@@ -78,16 +83,14 @@ export default {
   },
   methods: {
     clickRelease(selectedItems) {
-      const { namespace, name } = selectedItems[0]
-      this.$router.push(`releases/${namespace}/${name}`)
+      if (selectedItems && selectedItems.length) {
+        console.log(selectedItems)
+        const { namespace, name } = selectedItems[0]
+        this.$router.push(`/release/${namespace}/${name}`)
+      }
     },
     getTime(timestamp) {
       return new Date(timestamp).toLocaleString()
-    },
-    getStatusClass(status) {
-      if (status.toLowerCase() == 'pending') return 'text-warning'
-      else if (status.toLowerCase() == 'deployed') return 'text-success'
-      else if (status.toLowerCase() == 'failed') return 'text-danger'
     }
   }
 }

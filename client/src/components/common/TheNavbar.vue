@@ -1,6 +1,6 @@
 <template>
-  <b-navbar variant="dark" type="dark">
-    <b-navbar-brand to="/" class="nav-image" href>
+  <b-navbar id="navbar" fixed="top" variant="dark" type="dark">
+    <b-navbar-brand id="navbar-image" to="/">
       <img src="@/assets/logo.png" /> {{ brandName }}
     </b-navbar-brand>
     <b-navbar-nav id="nav" class="ml-auto">
@@ -29,7 +29,13 @@ export default {
 </script>
 
 <style scoped>
-.nav-image img {
+#navbar-image {
+  height: 100%;
+}
+#navbar-image img {
+  height: 100%;
+}
+#navbar {
   height: 50px;
 }
 </style>

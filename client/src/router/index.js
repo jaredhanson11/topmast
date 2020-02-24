@@ -15,11 +15,11 @@ class Route {
 
 export const routes = [
   new Route('/', 'Home', Home),
-  new Route('/releases', 'Releases', () => import('@/views/Releases.vue')),
-  new Route('/releases/:namespace', '', () =>
+  new Route('/release', 'Releases', () => import('@/views/Releases.vue')),
+  new Route('/release/:namespace', '', () =>
     import('@/views/ReleasesNamespace.vue')
   ),
-  new Route('/releases/:namespace/:release', '', () =>
+  new Route('/release/:namespace/:release', '', () =>
     import('@/views/ReleasesNamespaceRelease.vue')
   )
 ]
