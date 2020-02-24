@@ -11,6 +11,9 @@ import PortalVue from 'portal-vue'
 Vue.use(BootstrapVue)
 Vue.use(PortalVue)
 
+// Code highlighting css
+import 'highlight.js/styles/github.css'
+
 Vue.config.productionTip = false
 
 new Vue({
